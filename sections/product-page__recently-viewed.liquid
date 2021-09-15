@@ -1,0 +1,107 @@
+{% if section.settings.enabled %}
+{{ '//ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js' | script_tag }}
+{{ 'jquery.products.min.js' | asset_url | script_tag }}
+
+<div id="recently-viewed-products" class="row max-width" style="display:none">
+{% render 'block__general--heading' with section as section %}
+
+
+{% raw %}
+
+<script id="recently-viewed-product-template"  type="text/x-jquery-tmpl">
+
+<div class="col-6 col-md-3 card--holder">
+<div class="card--default  card--hover center">
+<a class="card__img--container" href="${url}">
+  <div class="card__img--ratio-">
+      <img src="${Shopify.Products.resizeImage(featured_image, "medium")}" />
+</a>    
+  </div>
+  <div class="card__info padding__horizontal">
+    <a href="${url}">
+      <span class="card__title">${title}</span>
+      <span class="card__price card__price--sale">{{if price_varies}}From {{/if}}${Shopify.formatMoney(price)}</span>
+    </a>
+  </div>
+</div>
+</div>
+</script>
+</div>
+{% endraw %}
+
+<script>
+Shopify.Products.showRecentlyViewed( { howManyToShow:4 } );
+</script>
+
+<style>
+  #recently-viewed-products {
+  	margin-top: 75px;
+  }
+</style>
+
+{% schema %}
+{
+  "name": {
+    "en": "Recently viewed"
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Enable/Disable"
+    },
+    {
+        "type": "checkbox",
+        "id": "enabled",
+        "label": "Enable recently viewed",
+        "default": true
+    },
+    {
+      "type": "header",
+      "content": "Layout and content"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Page width",
+      "options": [
+        {"value": "max-width", "label": "Boxed"},
+        {"value": "full-width", "label": "Full width"}
+      ],
+      "default": "max-width"
+    },
+    {
+        "type": "text",
+        "id": "heading",
+        "label": "Section heading",
+        "default": "Recommended for you"
+    },
+    {
+        "type": "text",
+        "id": "subheading",
+        "label": "Section subheading",
+        "default": "CHERRY PICKED PRODUCTS"
+    },
+    {
+      "type": "select",
+      "id": "subheadingPosition",
+      "label": "Subheading position",
+      "options": [
+        {"value": "above", "label": "Above heading"},
+        {"value": "below", "label": "Below heading"}
+      ],
+      "default": "above"
+    },
+    {
+      "type": "select",
+      "id": "textAlignment",
+      "label": "Text alignment (left to right)",
+      "options": [
+        {"value": "start", "label": "Left"},
+        {"value": "center", "label": "Center"},
+        {"value": "end", "label": "Right"}
+      ],
+      "default": "start"
+    }
+  ]
+}
+{% endschema %}
