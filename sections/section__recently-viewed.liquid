@@ -1,15 +1,14 @@
-
 {{ '//ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js' | script_tag }}
 {{ 'jquery.products.min.js' | asset_url | script_tag }}
 
 <div id="recently-viewed-products" class="row max-width" style="display:none">
+ 
 {% render 'block__general--heading' with section as section %}
 
 
 {% raw %}
 
 <script id="recently-viewed-product-template"  type="text/x-jquery-tmpl">
-
 <div class="col-6 col-md-3 card--holder">
 <div class="card--default  card--hover center">
 <a class="card__img--container" href="${url}">
@@ -96,6 +95,15 @@ Shopify.Products.showRecentlyViewed( { howManyToShow:4 } );
       ],
       "default": "start"
     }
-  ]
+  ],
+    "presets": [
+      {
+        "category": "Structure",
+        "name": "Recently viewed",
+        "settings": {
+        }
+}
+    ]
+      
 }
 {% endschema %}
